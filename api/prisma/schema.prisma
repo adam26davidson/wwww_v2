@@ -9,6 +9,10 @@ generator client {
   output   = "../src/generated/prisma"
 }
 
+generator json {
+  provider = "prisma-json-types-generator"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -25,7 +29,13 @@ model Game {
   id            Int    @id @default(autoincrement())
   code          String @unique
   stage         GameStage
+
+  /// [Player[]]
   players       Json   @db.Json
+
+  /// [Sentence[]]
   sentences     Json   @db.Json
+
+  /// [number[][]]
   permutations  Json   @db.Json
 }
